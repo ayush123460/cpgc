@@ -1,0 +1,22 @@
+{
+  "name": "cpgc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayush123460/cpgc.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ayush123460/cpgc/issues"
+  },
+  "homepage": "https://github.com/ayush123460/cpgc#readme",
+  "devDependencies": {
+    "electron": "^6.0.9"
+  }
+}
