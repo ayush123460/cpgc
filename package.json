@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/ayush123460/cpgc#readme",
   "devDependencies": {
-    "electron": "^6.0.9"
+    "electron": "^6.0.12"
   }
 }

@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>CPGC</title>
+	</head>
+	<body>
+		Hello, world!
+		<p id="a"></p>
+	</body>
+
+	<script>
+		const electron = require('electron');
+		const ipc = electron.ipcRenderer;
+
+		ipc.on('send_username', function(event, args) {
+			console.log(args);
+			document.getElementById("a").innerHTML = args;
+		});
+	</script>
+</html>
