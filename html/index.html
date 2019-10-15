@@ -1,10 +1,40 @@
 <html>
 	<head>
 		<title>CPGC</title>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:800i&display=swap" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
-		Hello, world!
-		<p id="a"></p>
+		<header>
+			<h1>CPGC</h1>
+		</header>
+
+		<div class="container">
+			<div class="left">
+				<div class="user_name">
+					User Name:
+					<span id="user_name"></span>
+				</div>
+
+				<div class="user_email">
+					User Email:
+					<span id="user_email"></span>
+				</div>
+
+				<div class="remote">
+					Remote URL: <br>
+					<span id="remote"></span>
+				</div>
+			</div>
+			<div class="right">
+				Current Branch: <span id="branch"></span>
+				<br>
+				Git Status: <br>
+				<textarea name="status" id="status" cols="30" rows="10"></textarea>
+				Git Log: <br>
+				<textarea name="log" id="log" cols="30" rows="10"></textarea>
+			</div>
+		</div>
 	</body>
 
 	<script>
@@ -12,8 +42,25 @@
 		const ipc = electron.ipcRenderer;
 
 		ipc.on('send_username', function(event, args) {
-			console.log(args);
-			document.getElementById("a").innerHTML = args;
+			document.getElementById("user_name").innerHTML = args;
+		});
+		ipc.on('send_useremail', function(event, args) {
+			document.getElementById("user_email").innerHTML = args;
+		});
+		ipc.on('send_remote', function(event, args) {
+			document.getElementById("remote").innerHTML = args;
+		});
+
+		ipc.on('send_status', function(event, args) {
+			document.getElementById("status").innerHTML = args;
+		});
+
+		ipc.on('send_log', function(event, args) {
+			document.getElementById("log").innerHTML = args;
+		});
+
+		ipc.on('send_branch', function(event, args) {
+			document.getElementById("branch").innerHTML = args;
 		});
 	</script>
 </html>

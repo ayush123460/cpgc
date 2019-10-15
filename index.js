@@ -5,49 +5,8 @@ const path = require('path');
 const { app, BrowserWindow } = require('electron');
 const ipc = require('electron').ipcMain;
 
-const list_dir = () => {
-	if(platform == 'linux') {
-	return execSync("ls -lA | awk '{print $9}'")
-		.toString()
-		.split(EOL);
-	}
-
-}
-
-var origin;
-
-let user = execSync("git config --list").toString().split(EOL);
-//console.log(user);
-
-const m = list_dir().forEach((l) => {
-	if(l == '.git') {
-		origin = fs.open(path.join(__dirname, '.git/config'), 'r', function(err, file) {
-			if(err)
-				console.log(err + '1');
-			fs.readFile(file, function(err, data) {
-				if(err)
-					console.log(err);
-				let i = data.toString().indexOf('url') + 6;
-				let c = data.toString()[i];
-				origin = c;
-				while(c != '\n') {
-					i++;
-					c = data.toString()[i];
-					origin += c;
-				}
-
-				return origin;
-			});
-		}); 
-	}
-});
-
-console.log(user[0]);
-
-let win;
-
 function createWindow() {
-	win = new BrowserWindow({
+	let win = new BrowserWindow({
 		width: 800,
 		height: 600,
 		webPreferences: {
@@ -56,9 +15,24 @@ function createWindow() {
 	});
 
 	win.loadFile('html/index.html');
-	win.webContents.send('send_username', user[0]);
-	win.webContents.openDevTools()
+	// win.webContents.openDevTools()
+	win.webContents.on('did-finish-load', () => {
+		win.webContents.send('send_username', name);
+		win.webContents.send('send_useremail', email);
+		win.webContents.send('send_remote', remote);
+		win.webContents.send('send_status', status);
+		win.webContents.send('send_log', log);
+		win.webContents.send('send_branch', branch);
+	});
 }
 
 app.on('ready', createWindow);
 
+let user = execSync("git config --list").toString().split(EOL);
+let email = user[0].split('=')[1];
+let name = user[1].split('=')[1];
+let remote = user[6].split('=')[1];
+
+let status = execSync("git status").toString();
+let log = execSync("git log").toString();
+let branch = execSync("git branch | grep \* | cut -d ' ' -f2").toString();
