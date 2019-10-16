@@ -27,8 +27,6 @@
 				</div>
 			</div>
 			<div class="right">
-				Current Branch: <span id="branch"></span>
-				<br>
 				Git Status: <br>
 				<textarea name="status" id="status" cols="30" rows="10"></textarea>
 				Git Log: <br>
@@ -57,10 +55,6 @@
 
 		ipc.on('send_log', function(event, args) {
 			document.getElementById("log").innerHTML = args;
-		});
-
-		ipc.on('send_branch', function(event, args) {
-			document.getElementById("branch").innerHTML = args;
 		});
 	</script>
 </html>
