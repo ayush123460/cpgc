@@ -14,7 +14,7 @@ function createWindow() {
 		}
 	});
 
-	win.loadFile('html/index.html');
+	//win.loadFile('html/index.html');
 	// win.webContents.openDevTools()
 	win.webContents.on('did-finish-load', () => {
 		win.webContents.send('send_username', name);
@@ -26,13 +26,14 @@ function createWindow() {
 	});
 }
 
-app.on('ready', createWindow);
+//app.on('ready', createWindow);
 
-let user = execSync("git config --list").toString().split(EOL);
-let email = user[0].split('=')[1];
-let name = user[1].split('=')[1];
-let remote = user[6].split('=')[1];
+// let user = execSync("git config --list").toString().split(EOL);
+let email = execSync("git config user.email").toString();
+let name = execSync("git config user.name").toString();
+let remote = execSync("git config remote.origin.url").toString();
 
 let status = execSync("git status").toString();
 let log = execSync("git log").toString();
-let branch = execSync("git branch | grep \* | cut -d ' ' -f2").toString();
+let branch = execSync("git branch").toString().split("\n");
+console.log(branch[0].split(' ')[1]);
