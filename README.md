@@ -1,6 +1,6 @@
 # Cross Platform Git Client(CPGC)
 
-Prerequisite steps:
+Steps after cloning/pulling:
 ---
 `git clone {repo url}`
 `npm install`
