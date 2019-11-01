@@ -1,15 +1,13 @@
 'use strict';
-// project dependencies
-const fs = require('fs');
-const path = require('path');
-
 // Electron dependencies
 const { app, BrowserWindow, ipcMain } = require('electron');
 
-const modules = require('./modules/index');
+// project dependencies
+const modules = require('./modules/git');
+const api = require('./modules/api');
 
 // global electron window object
-let win;
+let win, authWindow;
 
 // global var for dir
 let dir;
@@ -50,6 +48,21 @@ ipcMain.on('changeUser', function(evet, data) {
 		win.webContents.send('get-user-name', false);
 	});
 }); 
+
+ipcMain.on('login', async () => {
+	console.log('received login, creating window...');
+	authWindow = await api.handleGitHub();
+
+	authWindow.webContents.on('will-navigate', (event, url) => {
+		console.log('received will-navigate');
+		api.handleGitHubCallback(authWindow, url, win);
+	});
+
+	authWindow.on('close', () => {
+		authWindow = null;
+	}, false);
+});
+
 
 ipcMain.on('chooseDir', async function(event, data) {
 	// set dir
