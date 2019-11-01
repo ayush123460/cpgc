@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <title>CPGC</title>
+</head>
+<body>
+    <h1>Choose repo:</h1>
+    <div class="user_info" style="display: none;">
+        <form id="user_info">
+            <input type="name" id="user.name" required>
+            <input type="email" id="user.email" required>
+            <input type="submit" value="Submit" onclick="handleUserChange()">
+        </form>
+    </div>
+
+    <button onclick="handleClick()" id="chooseRepo">Choose Repo</button>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        ipcRenderer.on('get-user-name', function(event, data) {
+            if(data == true) {
+                document.querySelector('.user_info').style.display = "block";
+                document.querySelector('#chooseRepo').style.display = "none";
+            }
+        });
+
+        function handleClick() {
+            ipcRenderer.sendSync('chooseDir');
+        }
+
+        function handleUserChange() {
+            event.preventDefault();
+            let name = document.getElementById('user.name').value;
+            let email = document.getElementById('user.email').value;
+
+            let user = {
+                'name': name,
+                'email': email
+            }
+
+            ipcRenderer.sendSync('changeUser', user);
+        }
+    </script>
+</body>
+</html>

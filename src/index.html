@@ -1,17 +1,18 @@
 <html>
 	<head>
 		<title>CPGC</title>
-		<link href="https://fonts.googleapis.com/css?family=Montserrat:800i&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,800" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css">
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
-		<header>
-			<h1>CPGC</h1>
-		</header>
-
 		<div class="container">
 			<div class="left">
-				<div class="user_name">
+				<header>
+					<h1>CPGC</h1>
+					<h3>0.0.5</h3>
+				</header>
+				<!-- <div class="user_name">
 					User Name:
 					<span id="user_name"></span>
 				</div>
@@ -24,13 +25,25 @@
 				<div class="remote">
 					Remote URL: <br>
 					<span id="remote"></span>
+				</div> -->
+
+				<div class="container u-full-width">
+					<a href="" class="active">Overview</a>
 				</div>
 			</div>
 			<div class="right">
-				Git Status: <br>
+				<div class="user_name">
+					Welcome,&nbsp;<span id="user_name"></span>
+				</div>
+
+				<section>Overview</section>
+				<div class="container window">
+
+				</div>
+				<!-- Git Status: <br>
 				<textarea name="status" id="status" cols="30" rows="10"></textarea>
 				Git Log: <br>
-				<textarea name="log" id="log" cols="30" rows="10"></textarea>
+				<textarea name="log" id="log" cols="30" rows="10"></textarea> -->
 			</div>
 		</div>
 	</body>
@@ -41,20 +54,25 @@
 
 		ipc.on('send_username', function(event, args) {
 			document.getElementById("user_name").innerHTML = args;
+			console.log(args);
 		});
 		ipc.on('send_useremail', function(event, args) {
 			document.getElementById("user_email").innerHTML = args;
+			console.log(args);
 		});
 		ipc.on('send_remote', function(event, args) {
 			document.getElementById("remote").innerHTML = args;
+			console.log(args);
 		});
 
 		ipc.on('send_status', function(event, args) {
 			document.getElementById("status").innerHTML = args;
+			console.log(args);
 		});
 
 		ipc.on('send_log', function(event, args) {
 			document.getElementById("log").innerHTML = args;
+			console.log(args);
 		});
 	</script>
 </html>

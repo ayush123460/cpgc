@@ -1,0 +1,125 @@
+.u-full-width {
+    width: 100%;
+}
+
+section {
+    display: block;
+    margin: 20px 0;
+    padding-left: 0.4rem;
+    font-weight: 600;
+    font-size: 32pt;
+    border-left: 5px solid #0D3E68;
+}
+
+body {
+    font-family: 'Montserrat', 'sans-serif';
+    font-weight: 400;
+    color: #292929;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 1fr;
+    /* grid-column-gap: 10px; */
+    grid-template-columns: 200px 32px 1fr;
+    grid-template-areas: 'left gap right';
+    height: 100%;
+    background: #EFEFEF;
+    min-height: 0;
+    min-width: 0;
+}
+
+.container > .left {
+    grid-area: left;
+    background: #0D3E68;
+    color: white;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.left > header {
+    margin-top: 51px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.left > header > h1 {
+    font-size: 32pt;
+    line-height: 0;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.left > header > h3 {
+    margin-top: 10px;
+    font-size: 16pt;
+    line-height: 0;
+    font-weight: 500;
+}
+
+.left > .container {
+    background: transparent;
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.left > .container > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    height: 47px;
+    width: 100%;
+    color: white;
+    text-decoration: none;
+}
+
+a.active {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.left > .user_email {
+    margin: 50px 0;
+}
+
+.container > .right {
+    grid-area: right;
+    padding: 1.5em 0;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.window {
+    width: 95%;
+    height: 77%;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.container > .right > #status {
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    background: transparent;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.container > .right > #log {
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    background: transparent;
+    border: 1px solid;
+    border-radius: 5px;
+}

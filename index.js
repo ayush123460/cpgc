@@ -1,39 +1,73 @@
-const { platform, EOL } = require('os');
-const { execSync } = require('child_process');
+'use strict';
+// project dependencies
 const fs = require('fs');
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
-const ipc = require('electron').ipcMain;
 
-function createWindow() {
-	let win = new BrowserWindow({
-		width: 800,
-		height: 600,
+// Electron dependencies
+const { app, BrowserWindow, ipcMain } = require('electron');
+
+const modules = require('./modules/index');
+
+// global electron window object
+let win;
+
+// global var for dir
+let dir;
+
+// global vars for user and repo info.
+let user, repo;
+
+async function createWindow() {
+	user = modules.getUserInfo();
+
+	win = new BrowserWindow({
+		width: 1280,
+		height: 800,
 		webPreferences: {
 			nodeIntegration: true
 		}
 	});
 
-	//win.loadFile('html/index.html');
-	// win.webContents.openDevTools()
-	win.webContents.on('did-finish-load', () => {
-		win.webContents.send('send_username', name);
-		win.webContents.send('send_useremail', email);
-		win.webContents.send('send_remote', remote);
-		win.webContents.send('send_status', status);
-		win.webContents.send('send_log', log);
-		win.webContents.send('send_branch', branch);
-	});
+	// load the index.html file
+	win.loadFile('src/intro.html');
+
+	if(user.name == undefined || user.email == undefined) {
+		win.webContents.on('did-finish-load', function() {
+			win.webContents.send('get-user-name', true);
+		});
+	}
 }
 
-//app.on('ready', createWindow);
+// when done init, create the window.
+app.on('ready', createWindow);
 
-// let user = execSync("git config --list").toString().split(EOL);
-let email = execSync("git config user.email").toString();
-let name = execSync("git config user.name").toString();
-let remote = execSync("git config remote.origin.url").toString();
+ipcMain.on('changeUser', function(evet, data) {
+	modules.changeUser(data);
 
-let status = execSync("git status").toString();
-let log = execSync("git log").toString();
-let branch = execSync("git branch").toString().split("\n");
-console.log(branch[0].split(' ')[1]);
+	win.loadFile('src/intro.html');
+
+	win.webContents.on('did-finish-load', function() {
+		win.webContents.send('get-user-name', false);
+	});
+}); 
+
+ipcMain.on('chooseDir', async function(event, data) {
+	// set dir
+	dir = modules.chooseDir(win);
+
+	// load main view
+	win.loadFile('src/index.html');
+
+	// load the user info
+	repo = await modules.getRepoInfo(dir);
+
+	// when done loading the window, send the details.
+	win.webContents.on('did-finish-load', () => {
+		win.webContents.send('send_username', user.name);
+		win.webContents.send('send_useremail', user.email);
+		win.webContents.send('send_remote', repo.remote);
+		win.webContents.send('send_status', repo.status);
+		win.webContents.send('send_log', repo.log);
+		win.webContents.send('send_branch', repo.branch);
+	});
+});
