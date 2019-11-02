@@ -7,10 +7,6 @@ ipcRenderer.on('get-user-name', function(event, data) {
     }
 });
 
-ipcRenderer.on('token', function(event, data) {
-    localStorage.setItem('token', data);
-});
-
 function handleClick() {
     ipcRenderer.sendSync('chooseDir');
 }
@@ -26,9 +22,4 @@ function handleUserChange() {
     }
 
     ipcRenderer.sendSync('changeUser', user);
-}
-
-function login() {
-    event.preventDefault();
-    ipcRenderer.send('login');
 }

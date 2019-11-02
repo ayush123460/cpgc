@@ -14,8 +14,8 @@
 				</header>
 
 				<div class="container u-full-width">
-					<a href="" class="active">Overview</a>
-					<a href="" onclick="gotoCommit()">Commit History</a>
+					<a href="" onclick="gotoOverview()">Overview</a>
+					<a href="" class="active">Commit History</a>
 					<a href="" onclick="handleChangeProject()">Change Project</a>
 				</div>
 			</div>
@@ -24,24 +24,17 @@
 					Welcome,&nbsp;<span id="user_name"></span>
 				</div>
 
-				<section>Overview - <span class="remote"></span></section>
-				<p id="desc"></p>
+                <section>Commit History - <span class="remote"></span></section>
+                <p id="desc"></p>
 				<span class="login" onclick="login()">Connect with GitHub</span>
 				<span class="logged_in" style="display: none;">Logged in to GitHub as </span>
 
-				<div class="window">
-					<div class="heading">Latest Commit in <span id="branch"></span></div>
-					<div class="log">
-						<div class="log--message"></div>
-						<span class="log--email"></span><span class="log--time"></span>
-					</div>
-					
-					<div class="heading">Status</div>
-					<div class="status"></div>
+				<div class="window commit">
+					<div class="heading">Branch <span id="branch"></span></div>
 				</div>
 			</div>
 		</div>
 	</body>
 
-	<script src="js/main.js"></script>
+	<script src="js/commit.js"></script>
 </html>

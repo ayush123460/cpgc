@@ -12,9 +12,9 @@ ipc.on('send_username', function(event, args) {
     document.getElementById("user_name").innerHTML = args;
 });
 
-// ipc.on('send_useremail', function(event, args) {
-//     document.getElementById("user_email").innerHTML = args;
-// });
+ipc.on('send_useremail', function(event, args) {
+    document.getElementById("user_email").innerHTML = args;
+});
 
 ipc.on('send_remote', function(event, args) {
     document.querySelector(".remote").innerHTML = args;
@@ -33,15 +33,20 @@ ipc.once('send_status', function(event, args) {
 });
 
 ipc.once('send_log', function(event, args) {
-    document.querySelector(".log--message").innerHTML = args[0][4];
-    document.querySelector(".log--email").innerHTML = args[0][1];
-    document.querySelector(".log--time").innerHTML = args[0][2];
+    for(let i = 0; i < args.length; i++) {
+        let w = document.querySelector('.window');
+        w.innerHTML += 
+        `<div class="log">
+        <div class="log--message">${args[i][4]}</div>
+        <div class="log--email">${args[i][1]}</div><div class="log--time">${args[i][2]}</div>
+        <span class="log--number">${args[i][0]}</span>
+        </div><br>`;
+    }
 });
 
 ipc.on('token', function(event, data) {
     localStorage.setItem('token', data);
 });
-
 
 ipc.once('gh_user', (event, data) => {
     document.querySelector('.logged_in').innerHTML += data;
@@ -61,7 +66,7 @@ function handleChangeProject() {
     ipc.send('changeProject');
 }
 
-function gotoCommit() {
+function gotoOverview() {
     event.preventDefault();
-    ipc.send('gotoCommit');
+    ipc.send('gotoOverview');
 }

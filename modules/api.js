@@ -49,11 +49,40 @@ function requestGitHubToken(code, mainWin) {
     })
     .then((response) => {
         let token = response.data.split('&')[0].split('=')[1];
+        mainWin.reload();
         mainWin.webContents.send("token", token);
+    });
+}
+
+function getCollaborators(token, mainWin, repo) {
+    axios.get('https://api.github.com/user', {
+        headers: {
+            'Authorization': `token ${token}`
+        }
+    })
+    .then(response => {
+        let user = response.data.login;
+
+        axios.get(`https://api.github.com/repos/${user}/${repo}`, {
+            headers: {
+                'Authorization': `token ${token}`
+            }
+        })
+        .then(response => {
+            mainWin.webContents.send('gh_user', user);
+            mainWin.webContents.send('desc', response.data.description);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    })
+    .catch(error => {
+        console.log('error!');
     });
 }
 
 module.exports = {
     handleGitHub,
-    handleGitHubCallback
+    handleGitHubCallback,
+    getCollaborators
 };

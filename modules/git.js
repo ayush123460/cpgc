@@ -12,10 +12,24 @@ function getRepoInfo(dir) {
     // get branch, split by nextline, take the first one(assumed to be active), split by space and take the name of the branch
     let branch = execSync("git branch").toString().split("\n")[0].split(' ')[1];
 
+    // process the log
+    let logSplit = log.split('\n');
+    let arrLog = [];
+    for(let i = 0; i < logSplit.length; i += 6) {
+        arrLog.push([
+            logSplit[i],
+            logSplit[i+1],
+            logSplit[i+2],
+            logSplit[i+3],
+            logSplit[i+4],
+            logSplit[i+5]
+        ]);
+    }
+
     return {
         'remote': remote,
         'status': status,
-        'log': log,
+        'log': arrLog,
         'branch': branch
     };
 }

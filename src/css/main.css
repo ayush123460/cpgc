@@ -77,10 +77,15 @@ body {
     width: 100%;
     color: white;
     text-decoration: none;
+    transition: background 0.2s ease;
 }
 
 a.active {
     background: rgba(0, 0, 0, 0.2);
+}
+
+.left > .container > a:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .left > .user_email {
@@ -90,13 +95,16 @@ a.active {
 .container > .right {
     grid-area: right;
     padding: 1.5em 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     min-width: 0;
+    position: relative;
 }
 
 .window {
     width: 95%;
-    height: 77%;
+    /* height: 77%; */
+    position: relative;
     background: white;
     border-radius: 5px;
     box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.05);
@@ -179,4 +187,64 @@ button:hover {
     font-weight: 600;
     line-height: 0;
     font-size: 16pt;
+}
+
+.heading {
+    display: block;
+    padding: 1em 1.5em 0 1.5em;
+    font-size: 1.5em;
+}
+
+.log {
+    display: inline-block;
+    margin: 1em 1.5em;
+    padding: 1em 1.5em;
+    background: #dadada;
+    border-radius: 5px;
+}
+
+.log--message {
+    font-weight: 500;
+    font-size: 14pt;
+}
+
+.log--email {
+    font-size: 12pt;
+    /* font-weight: 500; */
+}
+
+.log--time {
+    font-size: 12pt;
+    /* font-weight: 500; */
+}
+
+.status {
+    display: inline-block;
+    margin: 1em 1.5em;
+    padding: 1em 1.5em;
+    background: #dadada;
+    border-radius: 5px;
+}
+
+.login {
+    position: absolute;
+    right: 30px;
+    top: 23px;
+    font-size: 12pt;
+    border-bottom: 1px solid #292929;
+}
+
+.login:hover {
+    cursor: pointer;
+}
+
+.logged_in {
+    position: absolute;
+    right: 30px;
+    top: 23px;
+    font-size: 12pt;
+}
+
+.commit > .log {
+    display: block;
 }
